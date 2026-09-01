@@ -33,6 +33,7 @@ DSH 的 `workflow` 工具本身就是成熟的图/流水线编排器（节点 = 
 ```
 pipeline-mode/
 ├── README.md                        # 本文件
+├── README.en.md                     # 英文版
 ├── LICENSE                          # MIT
 ├── .gitignore
 ├── docs/
@@ -51,31 +52,6 @@ pipeline-mode/
 
 **默认预设根**：`$HOME/.dsh/.agent-presets/`
 （若设置了 `DSH_HOME` 环境变量，则为 `$DSH_HOME/.agent-presets/`）
-
-### 方式零：npm 安装（已发布为 npm 包）
-
-```bash
-npm i -g dsh-pipeline-mode          # 全局安装（含 preset/ 目录与 CLI）
-dsh-pipeline-mode install           # 把 preset 复制到 DSH 预设根
-```
-
-或一次性执行（不全局安装）：
-
-```bash
-npx dsh-pipeline-mode install
-```
-
-CLI 子命令：
-
-| 命令 | 作用 |
-|---|---|
-| `dsh-pipeline-mode install` | 安装（目标已存在则确认覆盖） |
-| `dsh-pipeline-mode update` | 覆盖安装（不提示） |
-| `dsh-pipeline-mode uninstall` | 卸载 |
-| `dsh-pipeline-mode verify` | 静态校验已安装的 preset 文件 |
-| `dsh-pipeline-mode path` | 显示安装目标路径 |
-
-`--force` / `-y` 可跳过所有确认提示。升级方式：`npm i -g dsh-pipeline-mode@latest && dsh-pipeline-mode update`。
 
 ### 方式一：从发布目录一键脚本
 

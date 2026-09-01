@@ -32,8 +32,8 @@ DSH's `workflow` tool **is** a mature graph/pipeline orchestrator (nodes = `agen
 
 ```
 pipeline-mode/
-├── README.md                        # This file
-├── README.en.md                     # English version
+├── README.md                        # Chinese version
+├── README.en.md                     # This file
 ├── LICENSE                          # MIT
 ├── .gitignore
 ├── docs/
@@ -52,31 +52,6 @@ This release is a **DSH agent preset**. Install it by copying the `preset/` dire
 
 **Default preset root**: `$HOME/.dsh/.agent-presets/`
 (Override with the `DSH_HOME` environment variable: `$DSH_HOME/.agent-presets/`)
-
-### Option 0: npm (published as an npm package)
-
-```bash
-npm i -g dsh-pipeline-mode          # installs the preset/ dir + CLI
-dsh-pipeline-mode install           # copies the preset into DSH's preset root
-```
-
-Or run once without a global install:
-
-```bash
-npx dsh-pipeline-mode install
-```
-
-CLI subcommands:
-
-| Command | Action |
-|---|---|
-| `dsh-pipeline-mode install` | Install (prompts before overwriting an existing install) |
-| `dsh-pipeline-mode update` | Overwrite-install (no prompt) |
-| `dsh-pipeline-mode uninstall` | Uninstall |
-| `dsh-pipeline-mode verify` | Static validation of the installed preset files |
-| `dsh-pipeline-mode path` | Print the install target path |
-
-`--force` / `-y` skips all confirmations. To upgrade: `npm i -g dsh-pipeline-mode@latest && dsh-pipeline-mode update`.
 
 ### Option A: one-click script from the release directory
 
