@@ -1,0 +1,33 @@
+{
+  "name": "dsh-pipeline-mode",
+  "version": "0.1.0",
+  "description": "A DSH (DeepSeek Harness) agent preset: LangGraph-style adaptive Planner→Executor→Reviewer pipeline on the native workflow engine.",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "agent-preset",
+    "pipeline",
+    "langgraph",
+    "planner",
+    "reviewer"
+  ],
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "dsh-pipeline-mode": "bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "preset/",
+    "docs/",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node bin/cli.js verify"
+  }
+}

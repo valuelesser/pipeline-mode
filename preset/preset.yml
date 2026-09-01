@@ -1,0 +1,2 @@
+name: "流水线模式"
+description: "LangGraph-style ADAPTIVE pipeline controller: parallelism only when it pays (>=2 independent steps fan out with two parallel reviewers), else one compact batch executor plus one combined reviewer; automatic rework on FAIL (max 3 rounds). Outputs are written in the user's language."
