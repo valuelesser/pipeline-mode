@@ -35,6 +35,33 @@ function destDir() {
   return path.join(presetRoot(), PRESET_ID)
 }
 
+function configPath() {
+  const home = os.homedir()
+  return path.join(home, '.config', 'dsh-pipeline-mode.json')
+}
+
+const DEFAULT_CONFIG = {
+  language: 'auto',
+  maxRounds: 3,
+  maxParallel: 0,
+  reviewAngles: ['compliance', 'quality'],
+  goalOnFail: true
+}
+
+function initConfig() {
+  const dest = configPath()
+  if (fs.existsSync(dest)) {
+    log(`配置文件已存在: ${homeDisplay(dest)}`)
+    log('如需重置，请先删除该文件再运行本命令。')
+    return 0
+  }
+  fs.mkdirSync(path.dirname(dest), { recursive: true })
+  fs.writeFileSync(dest, JSON.stringify(DEFAULT_CONFIG, null, 2) + '\n')
+  log(`✅ 已生成配置文件: ${homeDisplay(dest)}`)
+  log('控制器每次运行前会读取它作为默认值；显式传入的 workflow args 优先。')
+  return 0
+}
+
 function homeDisplay(p) {
   return p.replace(os.homedir(), '~')
 }
@@ -149,6 +176,8 @@ async function main() {
     case 'path':
       log(homeDisplay(destDir()))
       return 0
+    case 'init-config':
+      return initConfig()
     case 'help':
     case '--help':
     case '-h':
@@ -160,6 +189,7 @@ async function main() {
       log('  dsh-pipeline-mode uninstall   卸载')
       log('  dsh-pipeline-mode verify      校验已安装的 preset 文件')
       log('  dsh-pipeline-mode path        显示安装目标路径')
+      log('  dsh-pipeline-mode init-config 生成 ~/.config/dsh-pipeline-mode.json 默认配置')
       log('')
       log('选项:')
       log('  --force / -y   跳过确认提示')

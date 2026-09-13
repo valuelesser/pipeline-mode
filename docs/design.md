@@ -191,10 +191,26 @@ const LANG_LINE = 'Write ALL of your output ... in the user\'s language: ' + LAN
 4. 汇报内容：`status`（PASS/FAIL/ABORTED）、`rounds`、`adaptive` 形状（总/并行/依赖步骤数、Reviewer 数）、检查摘要；FAIL 时附未解决问题清单与建议。
 
 ---
+## 8. P1 增强（架构层，2025-09）
 
-## 8. 已知限制与后续方向
+对照 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)（OmO）的对比分析（见 `OMO_COMPARISON.md`），实现 P1 五项：
 
-- **无强制开关**：模板未暴露 `args.mode`，无法手动强制"并行/紧凑"；如需可加 `const MODE = args.mode ?? (fanOut ? 'parallel' : 'compact')` 覆盖入口。
+| P1 项 | 实现位置 | 说明 |
+|---|---|---|
+| 面试式规划（学 `/ulw-plan`） | persona + SKILL.md | 任务目标/验收模糊时，控制器先 `ask_user_question` 澄清一次，再进 Planner |
+| 多角度/敌意审查（学 `hyperplan`） | SKILL.md 脚本模板 | `args.reviewAngles` 可选 `combined/compliance/quality/security/performance/hostile`；默认扇出=合规+质量，紧凑=综合 |
+| goal 联动 | SKILL.md 脚本返回 + persona | 3 轮 FAIL 后返回 `goalOnFail.suggested` + 目标，控制器调用 `create_goal` 跨轮续跑 |
+| 并行度配置 | SKILL.md 脚本模板 | `args.maxParallel` 限制扇出并发（默认不限，分批执行） |
+| 用户配置层 | CLI `init-config` + persona | `~/.config/dsh-pipeline-mode.json` 存默认 language/maxRounds/maxParallel/reviewAngles/goalOnFail |
+
+新增 workflow args：`maxRounds`（默认 3，上限 10）、`maxParallel`（默认不限）、`reviewAngles`（角度数组）、`goalOnFail`（默认 true）。
+
+---
+
+## 9. 已知限制与后续方向
+
+
+- **并行/紧凑由硬规则决定**：是否扇出由 `independentSteps >= 2` 硬规则决定，无手动强制开关；但可通过 `args.maxParallel`（限并行度）、`args.reviewAngles`（审查角度）间接控制执行形状。
 - **角色 prompt 可调**：Planner 的 `independent` 语义、Reviewer 的检查粒度、`MAX_ROUNDS` 上限都在 `SKILL.md` 模板内，改模板即可，无需重建预设。
 - **真实 LangGraph 集成**：目前明确不引入；若未来需要 LangGraph 的 checkpointer 持久化、interrupt 人类介入等特性，可单独评估 Host 插件方案（工程量大，见 §2.2）。
 - **跨会话产物**：Executor 产出写入会话工作区；如需固定产物目录或跨会话引用，需额外约定。
